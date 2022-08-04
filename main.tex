@@ -21,11 +21,13 @@
 %\usepackage[brazil]{babel}   
 \usepackage[utf8]{inputenc}  
 \usepackage{listings}
-\lstset{language=Go,
-  basicstyle=\ttfamily\scriptsize,
-  keywordstyle=\color{purple}\ttfamily\bfseries,
-  stringstyle=\color{red}\ttfamily,
-  commentstyle=\color{blue}\ttfamily}
+\lstset{
+    language=Go,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{purple}\ttfamily\bfseries,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{blue}\ttfamily
+}
 \usepackage{svg}
 \renewcommand{\lstlistlistingname}{Lista de Algoritmos}
 \renewcommand{\lstlistingname}{Algoritmo}
@@ -135,7 +137,7 @@ Para desenvolver a solução os autores escolheram o algoritmo Raft e buscaram u
 
 \subsection{\textit{Implementação de um interceptador para ordenação de mensagens em arquiteturas baseadas em microsserviços}}
 
-\cite{renan2021hermes} propôs uma arquitetura em ambientes de microsserviços para o desacoplamento da lógica de ordenação de mensagens. Um dos objetivos era manter consistência forte em um sistema replicado. Para isto, implementou-se replicação por máquinas de estados usando intercepção de mensagens que chegam ao serviço Hermes. O serviço, baseia-se em padrões de projeto voltados para arquiteturas de microsserviços. O código criado por \cite{renan2021hermes} provê interfaces que uma vez implementadas possibilitam que outros protocolos de consenso sejam incluídos, e também outros protocolos de comunicação.
+O autor \cite{renan2021hermes} propôs uma arquitetura em ambientes de microsserviços para o desacoplamento da lógica de ordenação de mensagens. Um dos objetivos era manter consistência forte em um sistema replicado. Para isto, implementou-se replicação por máquinas de estados usando intercepção de mensagens que chegam ao serviço Hermes. O serviço, baseia-se em padrões de projeto voltados para arquiteturas de microsserviços. O código criado por \cite{renan2021hermes} provê interfaces que uma vez implementadas possibilitam que outros protocolos de consenso sejam incluídos, e também outros protocolos de comunicação.
 
 \section{Desenvolvimento} \label{sec:des}
 
@@ -196,6 +198,15 @@ Em geral, há sobrecarga ao usar o Hermes. A sobrecarga foi baixa no cenário 10
 O presente artigo apresentou uma forma de comunicação via HTTP para o interceptador e ordenador de mensagens, Hermes. Esta forma de comunicação permite que aplicações que trabalham com HTTP, possam ser replicadas. Os desenvolvedores podem focar na lógica de negócio da sua aplicação ou {API}, sem se preocuparem com detalhes de ordenação. Este trabalho é também, um estudo sobre: a arquitetura geral do interceptador Hermes; técnicas de ordenação, orquestradores de contêineres, algoritmos de consenso e tópicos relacionados.
 
 Os experimentos com o ordenador Hermes mostraram latências mais altas em relação ao sistema sem replicação. As leituras em arquivo de uma linha aleatória a cada requisição \textit{GET} fazem com que os gráficos mostrem que o servidor consegue responder em baixas latências até determinada implicação de carga, mas sobe abruptamente em certo ponto. Durante os experimentos, foram feitas diversas tentativas de coleta de pontos e foram criados várias configurações de experimentação, porém os resultados sempre estavam culminando para algo parecido. Contudo, a escrita em arquivo pela requisição POST se demostrou mais previsível nos gráficos, aparentando uma subido gradual da latência enquanto a vazão estagnava.
+
+\section{Trabalhos Futuros}
+
+\begin{itemize}
+\item \textit{Explorar a extensibilidade do Hermes}: Implementação de novas formas de comunicação e de ordenação de mensagens no Hermes.
+
+\item \textit{Otimização do atendimento à requisições HTTP}: As requisições HTTP geralmente tem respostas, e retirar o encargo do Hermes ter que responder às requisições para o cliente que enviou as mensagens, dará ao Hermes a oportunidade de apenas tratar ordenação de mensagens, removendo sobrecargas desnecessárias.
+\end{itemize}
+
 
 \bibliographystyle{sbc}
 \bibliography{sbc-template}
